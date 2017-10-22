@@ -7,14 +7,12 @@ using namespace std;
 long int stalls[100000];
 long int c, n;
 
-bool distPossb(int dist){ //if it's possible to assign 'c' cows with 'dist' minimum distance between the cows
+bool distPossb(int dist){ //if it's possible to assign 'c' cows with distance 'dist' between them
 	long int assigned = 1, last = stalls[0]; //assign to the first stall
 	
 	for(long int i = 1; i < n; i++){
 		if(stalls[i] - last >= dist){ //assign to the most left stall after the last assigned		
-			
 			assigned++;
-		
 			if(assigned == c) //if the cows was all assigned
 				return 1;
 			
@@ -45,10 +43,10 @@ int main(){
 		start = 0, end = stalls[n - 1] - stalls[0];
 		
 		if(c > 2){
-			while(start <= end){ //binary search algorithm for distances (> 2) (trying to improve the distance between the cows)
+			while(start <= end){ //binary search algorithm for distances
 				mid = (start + end) >> 1;
 			
-				if(distPossb(mid)) 
+				if(distPossb(mid)) //trying to improve the distances between the cows
 					start = mid + 1;
 				else
 					end = mid - 1;
@@ -56,7 +54,7 @@ int main(){
 		
 			cout << mid;
 		} else
-			cout << end; //invariant for 2 cows is (stalls[n - 1] - stalls[0])
+			cout << end; //largest minimum distance for 2 cows is the distance between the first and the last stall 
 		
 		if(i != t - 1)
 			cout << endl;
